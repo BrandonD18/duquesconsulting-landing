@@ -462,7 +462,7 @@
         <a href="#pilot-form" class="btn btn-accent">Start the Booked-Job Pilot</a>
         <a href="#offer" class="btn btn-ghost">See full pricing</a>
       </div>
-      <p class="hero-fine" id="hero-fine">$2,500 setup + $4,000/mo pilot management &middot; you fund ad spend directly &middot; no long-term contract</p>
+      <p class="hero-fine" id="hero-fine">$2,500 setup + $4,000/cycle pilot management &middot; you fund ad spend directly &middot; no long-term contract</p>
 
       <div class="ticket-strip">
         <div class="ticket-field">
@@ -626,8 +626,8 @@
             <span class="val">$2,500</span>
           </div>
           <div class="offer-line">
-            <span class="desc">Pilot Management <small id="offer-mgmt-small">Billed monthly for the 90-day window</small></span>
-            <span class="val" id="offer-mgmt-val">$4,000/mo</span>
+            <span class="desc">Pilot Management <small id="offer-mgmt-small">Billed per cycle for the 90-day window</small></span>
+            <span class="val" id="offer-mgmt-val">$4,000/cycle</span>
           </div>
           <div class="offer-line">
             <span class="desc">Ad Spend <small>Billed to you directly by the ad platform — never paid to us</small></span>
@@ -784,12 +784,12 @@
 
     // --- Split test: Variant A (control, current pricing) vs Variant B (buy 6mo, get 8mo free) ---
     var VARIANT_B = {
-      heroFine: '$2,500 setup + 6 months prepaid, get 8 months free (14 months total) · you fund ad spend directly · locked-in pricing for the full engagement',
-      offerMgmtSmall: 'Buy 6 months, get 8 months free — 14 months of management total',
-      offerMgmtVal: '$4,000/mo × 6',
-      mathMgmtLabel: '6 months of pilot management (6 × $4,000)',
+      heroFine: '$2,500 setup + 6 cycles prepaid, get 8 cycles free (14 cycles total) · you fund ad spend directly · locked-in pricing for the full engagement',
+      offerMgmtSmall: 'Buy 6 cycles, get 8 cycles free — 14 cycles of management total',
+      offerMgmtVal: '$4,000/cycle × 6',
+      mathMgmtLabel: '6 cycles of pilot management (6 × $4,000)',
       mathMgmtVal: '$24,000',
-      mathTotalLabel: 'Total fees for 14 months of management',
+      mathTotalLabel: 'Total fees for 14 cycles of management',
       mathTotalVal: '$26,500',
       calcNetLabel: 'Net after the $26,500 pilot fee',
       pilotFee: 26500
