@@ -1,5 +1,5 @@
 <title>Booked-Job Pilot</title>
-<meta name="description" content="DuquesConsulting runs a 90-day performance pilot that puts qualified booked HVAC jobs on your calendar in the Philadelphia metro — with a clear cost per booked job and a 3x guarantee.">
+<meta name="description" content="DuquesConsulting runs a 90-day performance pilot that puts qualified booked HVAC jobs on your calendar in the Philadelphia metro — with a clear cost per booked job and a work-for-free guarantee.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -282,6 +282,21 @@
   .math-row .val{ font-variant-numeric:tabular-nums; }
   .math-note{ margin-top:22px; color:var(--ink-muted); font-size:0.95rem; }
 
+  .calc-card{ background:var(--bg-raised); border:1px solid var(--line-strong); border-radius:4px; padding:28px 30px; max-width:70ch; margin-top:20px; }
+  .calc-inputs{ display:grid; gap:18px; margin-bottom:22px; padding-bottom:22px; border-bottom:1px solid var(--line); }
+  @media (min-width:560px){ .calc-inputs{ grid-template-columns:1fr 1fr; } }
+  .calc-field{ display:flex; flex-direction:column; gap:7px; }
+  .calc-field label{ font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-dim); }
+  .calc-input-wrap{ display:flex; align-items:center; gap:8px; border:1px solid var(--line-strong); border-radius:3px; padding:11px 14px; background:var(--bg); transition:border-color .15s ease; }
+  .calc-input-wrap:focus-within{ border-color:var(--accent); }
+  .calc-prefix, .calc-suffix{ font-family:var(--font-mono); color:var(--ink-dim); font-size:1rem; }
+  .calc-input-wrap input{
+    flex:1; min-width:0; font-family:var(--font-mono); font-weight:600; font-size:1.05rem;
+    color:var(--ink); background:transparent; border:none; padding:0; font-variant-numeric:tabular-nums;
+  }
+  .calc-input-wrap input:focus{ outline:none; }
+  .calc-input-wrap input::-webkit-inner-spin-button{ opacity:0.6; }
+
   /* ---------- FAQ ---------- */
   .faq-list{ display:grid; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:4px; overflow:hidden; }
   details{ background:var(--bg); }
@@ -352,7 +367,7 @@
   <section class="hero">
     <div class="wrap">
       <p class="eyebrow">90-Day Booked-Job Pilot</p>
-      <h1>6 booked HVAC jobs on your calendar in 90 days. <em>Or we pay you 3x.</em></h1>
+      <h1>6 booked HVAC jobs on your calendar in 90 days. <em>Or we work for free until we do.</em></h1>
       <p class="lede">A performance pilot for owner-led HVAC contractors in the Philadelphia metro who are done paying for clicks, leads, and vanity numbers. You get qualified jobs booked in your service area, with a clear cost per booked job, reported every week.</p>
       <div class="hero-ctas">
         <a href="#pilot-form" class="btn btn-accent">Start the Booked-Job Pilot</a>
@@ -375,7 +390,7 @@
         </div>
         <div class="ticket-field">
           <div class="ticket-label">Guarantee</div>
-          <div class="ticket-value">3x Fees Back</div>
+          <div class="ticket-value">Free Until Done</div>
         </div>
       </div>
     </div>
@@ -476,7 +491,7 @@
             <div class="ticket-label">Pilot Work Order</div>
             <h3>Booked-Job Pilot</h3>
           </div>
-          <div class="stamp">3x<br>guaranteed</div>
+          <div class="stamp">work free<br>til done</div>
         </div>
 
         <div class="offer-lines">
@@ -500,7 +515,7 @@
 
         <div class="offer-guarantee">
           <div class="ticket-label">The Guarantee</div>
-          <p>If we miss the 6-job floor while you've met the agreed minimum ad spend and a fast-response SLA on your end, <strong>we pay you 3x every dollar you paid us in fees.</strong> Not a discount. Not a credit. 3x back.</p>
+          <p>If we miss the 6-job floor while you've met the agreed minimum ad spend and a fast-response SLA on your end, <strong>we keep running the pilot at no additional management fee until you hit six.</strong> No more invoices from us until the floor is met. Not a maybe — we don't stop working.</p>
         </div>
 
         <div class="offer-cta">
@@ -550,7 +565,33 @@
         <div class="math-row"><span>90 days of pilot management (3 &times; $4,000)</span><span class="val">$12,000</span></div>
         <div class="math-row total"><span>Total fees for the pilot</span><span class="val">$14,500</span></div>
       </div>
-      <p class="math-note">Example: if your average install ticket runs around $8,000, two closed jobs from the pilot cover the entire fee — and the pilot is built around a floor of six booked jobs. This isn't a promise about your revenue. It's why the number on the calendar matters more than the number of leads in your inbox.</p>
+
+      <div class="calc-card">
+        <div class="scorecard-label" style="color:var(--ink-dim);">Run Your Own Numbers</div>
+        <div class="calc-inputs">
+          <div class="calc-field">
+            <label for="calc-job-value">Average value per closed job</label>
+            <div class="calc-input-wrap">
+              <span class="calc-prefix">$</span>
+              <input id="calc-job-value" type="number" inputmode="numeric" min="0" step="100" value="8000">
+            </div>
+          </div>
+          <div class="calc-field">
+            <label for="calc-close-rate">Your typical close rate on booked appointments</label>
+            <div class="calc-input-wrap">
+              <input id="calc-close-rate" type="number" inputmode="numeric" min="0" max="100" step="5" value="50">
+              <span class="calc-suffix">%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="math-row"><span>Closed jobs at the 6-job floor, at your close rate</span><span class="val" id="calc-closed">3.0 jobs</span></div>
+        <div class="math-row"><span>Revenue at that close rate</span><span class="val" id="calc-revenue">$24,000</span></div>
+        <div class="math-row total"><span>Net after the $14,500 pilot fee</span><span class="val" id="calc-net">$9,500</span></div>
+        <p class="math-note" id="calc-breakeven" style="margin-top:18px;">You'd need about 2 closed jobs (roughly 4 booked appointments at a 50% close rate) to cover the entire pilot fee.</p>
+      </div>
+
+      <p class="math-note">This is arithmetic on the numbers you enter, not a promise about your revenue. It's why the number on the calendar matters more than the number of leads in your inbox.</p>
     </div>
   </section>
 
@@ -567,7 +608,7 @@
         </details>
         <details>
           <summary>What happens if you don't hit 6 booked jobs?</summary>
-          <div class="faq-a">As long as you've met the agreed minimum ad spend and answered calls on the agreed response-time SLA, we pay you 3x every dollar you paid us in setup and management fees. In writing, before the pilot starts.</div>
+          <div class="faq-a">As long as you've met the agreed minimum ad spend and answered calls on the agreed response-time SLA, we keep managing the pilot — no additional management fee — until you hit six booked jobs. You stop paying, we don't stop working. In writing, before the pilot starts.</div>
         </details>
         <details>
           <summary>Do you control my ad budget?</summary>
@@ -641,6 +682,49 @@
 
 <script>
   (function(){
+    var PILOT_FEE = 14500;
+    var BOOKING_FLOOR = 6;
+    var jobValueInput = document.getElementById('calc-job-value');
+    var closeRateInput = document.getElementById('calc-close-rate');
+    var closedEl = document.getElementById('calc-closed');
+    var revenueEl = document.getElementById('calc-revenue');
+    var netEl = document.getElementById('calc-net');
+    var breakevenEl = document.getElementById('calc-breakeven');
+
+    function money(n){
+      var sign = n < 0 ? '-' : '';
+      return sign + '$' + Math.round(Math.abs(n)).toLocaleString('en-US');
+    }
+
+    function runCalc(){
+      var jobValue = Math.max(0, parseFloat(jobValueInput.value) || 0);
+      var closeRatePct = Math.min(100, Math.max(0, parseFloat(closeRateInput.value) || 0));
+      var closeRate = closeRatePct / 100;
+
+      var closedAtFloor = BOOKING_FLOOR * closeRate;
+      var revenueAtFloor = closedAtFloor * jobValue;
+      var netAtFloor = revenueAtFloor - PILOT_FEE;
+
+      closedEl.textContent = closedAtFloor.toFixed(1) + ' jobs';
+      revenueEl.textContent = money(revenueAtFloor);
+      netEl.textContent = money(netAtFloor);
+      netEl.style.color = netAtFloor >= 0 ? 'var(--accent)' : 'var(--ink-muted)';
+
+      if(jobValue > 0 && closeRate > 0){
+        var jobsToBreakEven = Math.ceil(PILOT_FEE / jobValue);
+        var apptsToBreakEven = Math.ceil(jobsToBreakEven / closeRate);
+        breakevenEl.textContent = 'You\'d need about ' + jobsToBreakEven + ' closed job' + (jobsToBreakEven === 1 ? '' : 's') +
+          ' (roughly ' + apptsToBreakEven + ' booked appointment' + (apptsToBreakEven === 1 ? '' : 's') +
+          ' at a ' + closeRatePct + '% close rate) to cover the entire pilot fee.';
+      } else {
+        breakevenEl.textContent = 'Enter a job value and close rate above to see your break-even point.';
+      }
+    }
+
+    jobValueInput.addEventListener('input', runCalc);
+    closeRateInput.addEventListener('input', runCalc);
+    runCalc();
+
     var form = document.getElementById('pilotForm');
     var thankYou = document.getElementById('thankYou');
     form.addEventListener('submit', function(e){
