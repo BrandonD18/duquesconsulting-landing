@@ -282,20 +282,34 @@
   .math-row .val{ font-variant-numeric:tabular-nums; }
   .math-note{ margin-top:22px; color:var(--ink-muted); font-size:0.95rem; }
 
-  .calc-card{ background:var(--bg-raised); border:1px solid var(--line-strong); border-radius:4px; padding:28px 30px; max-width:70ch; margin-top:20px; }
-  .calc-inputs{ display:grid; gap:18px; margin-bottom:22px; padding-bottom:22px; border-bottom:1px solid var(--line); }
-  @media (min-width:560px){ .calc-inputs{ grid-template-columns:1fr 1fr; } }
-  .calc-field{ display:flex; flex-direction:column; gap:7px; }
-  .calc-field label{ font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-dim); }
-  .calc-input-wrap{ display:flex; align-items:center; gap:8px; border:1px solid var(--line-strong); border-radius:3px; padding:11px 14px; background:var(--bg); transition:border-color .15s ease; }
-  .calc-input-wrap:focus-within{ border-color:var(--accent); }
-  .calc-prefix, .calc-suffix{ font-family:var(--font-mono); color:var(--ink-dim); font-size:1rem; }
-  .calc-input-wrap input{
-    flex:1; min-width:0; font-family:var(--font-mono); font-weight:600; font-size:1.05rem;
-    color:var(--ink); background:transparent; border:none; padding:0; font-variant-numeric:tabular-nums;
+  .calc-card{ background:var(--bg-raised); border:1px solid var(--line-strong); border-radius:4px; padding:28px 30px; max-width:70ch; }
+  .calc-sliders{ display:grid; gap:30px; margin-bottom:24px; padding-bottom:24px; border-bottom:1px solid var(--line); }
+  .calc-field{ display:flex; flex-direction:column; gap:12px; }
+  .calc-field-head{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap; }
+  .calc-field-head label{ font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-dim); }
+  .calc-readout{ font-family:var(--font-mono); font-weight:700; font-size:1.2rem; color:var(--accent); font-variant-numeric:tabular-nums; white-space:nowrap; }
+
+  .calc-slider{
+    -webkit-appearance:none; appearance:none;
+    width:100%; height:4px; border-radius:2px;
+    background:var(--line-strong);
+    margin:6px 0;
   }
-  .calc-input-wrap input:focus{ outline:none; }
-  .calc-input-wrap input::-webkit-inner-spin-button{ opacity:0.6; }
+  .calc-slider::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none;
+    width:20px; height:20px; border-radius:50%;
+    background:var(--accent);
+    border:3px solid var(--bg-raised);
+    box-shadow:0 0 0 1px var(--accent);
+    cursor:pointer;
+  }
+  .calc-slider::-moz-range-thumb{
+    width:20px; height:20px; border-radius:50%;
+    background:var(--accent); border:3px solid var(--bg-raised);
+    box-shadow:0 0 0 1px var(--accent); cursor:pointer;
+  }
+  .calc-slider::-moz-range-track{ height:4px; border-radius:2px; background:var(--line-strong); }
+  .calc-slider:focus-visible{ outline:2px solid var(--accent); outline-offset:6px; }
 
   /* ---------- FAQ ---------- */
   .faq-list{ display:grid; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:4px; overflow:hidden; }
@@ -392,6 +406,40 @@
           <div class="ticket-label">Guarantee</div>
           <div class="ticket-value">Free Until Done</div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="roi" id="roi">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Run The Numbers</p>
+        <h2>What are six booked jobs actually worth to you?</h2>
+        <p class="lede">Slide to your numbers. Updates live, no email required.</p>
+      </div>
+
+      <div class="calc-card">
+        <div class="calc-sliders">
+          <div class="calc-field">
+            <div class="calc-field-head">
+              <label for="calc-job-value">Average value per closed job</label>
+              <span class="calc-readout" id="calc-job-value-readout">$8,000</span>
+            </div>
+            <input id="calc-job-value" class="calc-slider" type="range" min="1000" max="20000" step="500" value="8000">
+          </div>
+          <div class="calc-field">
+            <div class="calc-field-head">
+              <label for="calc-close-rate">Your typical close rate on booked appointments</label>
+              <span class="calc-readout" id="calc-close-rate-readout">50%</span>
+            </div>
+            <input id="calc-close-rate" class="calc-slider" type="range" min="10" max="100" step="5" value="50">
+          </div>
+        </div>
+
+        <div class="math-row"><span>Closed jobs at the 6-job floor, at your close rate</span><span class="val" id="calc-closed">3.0 jobs</span></div>
+        <div class="math-row"><span>Revenue at that close rate</span><span class="val" id="calc-revenue">$24,000</span></div>
+        <div class="math-row total"><span>Net after the $14,500 pilot fee</span><span class="val" id="calc-net">$9,500</span></div>
+        <p class="math-note" id="calc-breakeven" style="margin-top:18px;">You'd need about 2 closed jobs (roughly 4 booked appointments at a 50% close rate) to cover the entire pilot fee.</p>
       </div>
     </div>
   </section>
@@ -566,32 +614,7 @@
         <div class="math-row total"><span>Total fees for the pilot</span><span class="val">$14,500</span></div>
       </div>
 
-      <div class="calc-card">
-        <div class="scorecard-label" style="color:var(--ink-dim);">Run Your Own Numbers</div>
-        <div class="calc-inputs">
-          <div class="calc-field">
-            <label for="calc-job-value">Average value per closed job</label>
-            <div class="calc-input-wrap">
-              <span class="calc-prefix">$</span>
-              <input id="calc-job-value" type="number" inputmode="numeric" min="0" step="100" value="8000">
-            </div>
-          </div>
-          <div class="calc-field">
-            <label for="calc-close-rate">Your typical close rate on booked appointments</label>
-            <div class="calc-input-wrap">
-              <input id="calc-close-rate" type="number" inputmode="numeric" min="0" max="100" step="5" value="50">
-              <span class="calc-suffix">%</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="math-row"><span>Closed jobs at the 6-job floor, at your close rate</span><span class="val" id="calc-closed">3.0 jobs</span></div>
-        <div class="math-row"><span>Revenue at that close rate</span><span class="val" id="calc-revenue">$24,000</span></div>
-        <div class="math-row total"><span>Net after the $14,500 pilot fee</span><span class="val" id="calc-net">$9,500</span></div>
-        <p class="math-note" id="calc-breakeven" style="margin-top:18px;">You'd need about 2 closed jobs (roughly 4 booked appointments at a 50% close rate) to cover the entire pilot fee.</p>
-      </div>
-
-      <p class="math-note">This is arithmetic on the numbers you enter, not a promise about your revenue. It's why the number on the calendar matters more than the number of leads in your inbox.</p>
+      <p class="math-note">This is fixed pricing, not a promise about your revenue. For what six booked jobs could mean for your business specifically, <a href="#roi" style="color:var(--accent);">run your numbers</a> above.</p>
     </div>
   </section>
 
@@ -696,10 +719,16 @@
       return sign + '$' + Math.round(Math.abs(n)).toLocaleString('en-US');
     }
 
+    var jobValueReadout = document.getElementById('calc-job-value-readout');
+    var closeRateReadout = document.getElementById('calc-close-rate-readout');
+
     function runCalc(){
       var jobValue = Math.max(0, parseFloat(jobValueInput.value) || 0);
       var closeRatePct = Math.min(100, Math.max(0, parseFloat(closeRateInput.value) || 0));
       var closeRate = closeRatePct / 100;
+
+      jobValueReadout.textContent = money(jobValue);
+      closeRateReadout.textContent = closeRatePct + '%';
 
       var closedAtFloor = BOOKING_FLOOR * closeRate;
       var revenueAtFloor = closedAtFloor * jobValue;
