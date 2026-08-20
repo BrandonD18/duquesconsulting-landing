@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://brandond18.github.io/duquesconsulting-landing/sitemap.xml
+Sitemap: https://duques-hvac-pilot.netlify.app/sitemap.xml
