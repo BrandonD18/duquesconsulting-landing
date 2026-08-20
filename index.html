@@ -463,7 +463,7 @@
         <a href="#pilot-form" class="btn btn-accent">Start the Booked-Job Pilot</a>
         <a href="#offer" class="btn btn-ghost">See full pricing</a>
       </div>
-      <p class="hero-fine">$2,500 setup + $4,000/mo pilot management &middot; you fund ad spend directly &middot; no long-term contract</p>
+      <p class="hero-fine" id="hero-fine">$2,500 setup + $4,000/mo pilot management &middot; you fund ad spend directly &middot; no long-term contract</p>
 
       <div class="ticket-strip">
         <div class="ticket-field">
@@ -513,7 +513,7 @@
 
         <div class="math-row"><span>Closed jobs at the 6-job floor, at your close rate</span><span class="val" id="calc-closed">3.0 jobs</span></div>
         <div class="math-row"><span>Revenue at that close rate</span><span class="val" id="calc-revenue">$24,000</span></div>
-        <div class="math-row total"><span>Net after the $14,500 pilot fee</span><span class="val" id="calc-net">$9,500</span></div>
+        <div class="math-row total"><span id="calc-net-label">Net after the $14,500 pilot fee</span><span class="val" id="calc-net">$9,500</span></div>
         <p class="math-note" id="calc-breakeven" style="margin-top:18px;">You'd need about 2 closed jobs (roughly 4 booked appointments at a 50% close rate) to cover the entire pilot fee.</p>
       </div>
     </div>
@@ -627,8 +627,8 @@
             <span class="val">$2,500</span>
           </div>
           <div class="offer-line">
-            <span class="desc">Pilot Management <small>Billed monthly for the 90-day window</small></span>
-            <span class="val">$4,000/mo</span>
+            <span class="desc">Pilot Management <small id="offer-mgmt-small">Billed monthly for the 90-day window</small></span>
+            <span class="val" id="offer-mgmt-val">$4,000/mo</span>
           </div>
           <div class="offer-line">
             <span class="desc">Ad Spend <small>Billed to you directly by the ad platform — never paid to us</small></span>
@@ -687,8 +687,8 @@
       </div>
       <div class="math-card">
         <div class="math-row"><span>Setup</span><span class="val">$2,500</span></div>
-        <div class="math-row"><span>90 days of pilot management (3 &times; $4,000)</span><span class="val">$12,000</span></div>
-        <div class="math-row total"><span>Total fees for the pilot</span><span class="val">$14,500</span></div>
+        <div class="math-row"><span id="math-mgmt-label">90 days of pilot management (3 &times; $4,000)</span><span class="val" id="math-mgmt-val">$12,000</span></div>
+        <div class="math-row total"><span id="math-total-label">Total fees for the pilot</span><span class="val" id="math-total-val">$14,500</span></div>
       </div>
 
       <p class="math-note">This is fixed pricing, not a promise about your revenue. For what six booked jobs could mean for your business specifically, <a href="#roi" style="color:var(--accent);">run your numbers</a> above.</p>
@@ -734,6 +734,7 @@
 
       <form class="form-shell" id="pilotForm" name="booked-job-pilot" method="POST" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="booked-job-pilot">
+        <input type="hidden" name="variant" id="variant-field" value="a">
         <p style="position:absolute;left:-9999px;"><label>Don't fill this out: <input name="bot-field"></label></p>
 
         <div class="form-grid two">
@@ -781,6 +782,46 @@
   (function(){
     var PILOT_FEE = 14500;
     var BOOKING_FLOOR = 6;
+
+    // --- Split test: Variant A (control, current pricing) vs Variant B (buy 6mo, get 8mo free) ---
+    var VARIANT_B = {
+      heroFine: '$2,500 setup + 6 months prepaid, get 8 months free (14 months total) · you fund ad spend directly · locked-in pricing for the full engagement',
+      offerMgmtSmall: 'Buy 6 months, get 8 months free — 14 months of management total',
+      offerMgmtVal: '$4,000/mo × 6',
+      mathMgmtLabel: '6 months of pilot management (6 × $4,000)',
+      mathMgmtVal: '$24,000',
+      mathTotalLabel: 'Total fees for 14 months of management',
+      mathTotalVal: '$26,500',
+      calcNetLabel: 'Net after the $26,500 pilot fee',
+      pilotFee: 26500
+    };
+
+    function pickVariant(){
+      var stored = null;
+      try{ stored = localStorage.getItem('dc_variant'); }catch(e){}
+      if(stored === 'a' || stored === 'b') return stored;
+      var v = Math.random() < 0.5 ? 'a' : 'b';
+      try{ localStorage.setItem('dc_variant', v); }catch(e){}
+      return v;
+    }
+
+    var variant = pickVariant();
+    var variantField = document.getElementById('variant-field');
+    if(variantField) variantField.value = variant;
+
+    if(variant === 'b'){
+      document.getElementById('hero-fine').textContent = VARIANT_B.heroFine;
+      document.getElementById('offer-mgmt-small').textContent = VARIANT_B.offerMgmtSmall;
+      document.getElementById('offer-mgmt-val').textContent = VARIANT_B.offerMgmtVal;
+      document.getElementById('math-mgmt-label').textContent = VARIANT_B.mathMgmtLabel;
+      document.getElementById('math-mgmt-val').textContent = VARIANT_B.mathMgmtVal;
+      document.getElementById('math-total-label').textContent = VARIANT_B.mathTotalLabel;
+      document.getElementById('math-total-val').textContent = VARIANT_B.mathTotalVal;
+      document.getElementById('calc-net-label').textContent = VARIANT_B.calcNetLabel;
+      PILOT_FEE = VARIANT_B.pilotFee;
+    }
+    // --- end split test ---
+
     var jobValueInput = document.getElementById('calc-job-value');
     var closeRateInput = document.getElementById('calc-close-rate');
     var closedEl = document.getElementById('calc-closed');
